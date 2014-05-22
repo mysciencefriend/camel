@@ -9,3 +9,9 @@ pids
 
 # Dependencies
 node_modules
+
+posts/
+
+public/
+
+templates/
