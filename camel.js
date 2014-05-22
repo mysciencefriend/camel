@@ -621,10 +621,10 @@ app.get('/:year/:month/:day/:slug', function (request, response) {
 });
 
 // Empties the cache.
-// app.get('/tosscache', function (request, response) {
-//     emptyCache();
-//     response.send(205);
-// });
+ app.get('/tosscache', function (request, response) {
+     emptyCache();
+     response.send(205);
+ });
 
 // Support for non-blog posts, such as /about, as well as years, such as /2014.
 app.get('/:slug', function (request, response) {
