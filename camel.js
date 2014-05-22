@@ -210,12 +210,8 @@ function generateBodyHtmlForFile(file) {
     return body;
 }
 
-// Gets the external relative name/link for this file
-function externalFilenameForFile(file) {
-    return externalFilenameForFile(file, '');
-}
-
-// Gets the external absolute link for this file
+// Gets the external link for this file. Relative if request is
+// not specified. Absolute if request is specified.
 function externalFilenameForFile(file, request) {
     var hostname = request != undefined ? request.headers.host : '';
 
@@ -519,7 +515,7 @@ app.get('/rss', function (request, response) {
                             // Offset the time because Heroku's servers are GMT, whereas these dates are EST/EDT.
                             date: new Date(article['metadata']['Date']).addHours(utcOffset),
                             url: externalFilenameForFile(article['file'], request),
-                            description: article['unwrappedBody']
+                            description: article['unwrappedBody'].replace(/[\s\S]*<script[\s\S]*<\/script>/gm, "")
                         });
                     }
                 });
@@ -644,5 +640,5 @@ app.get('/:slug', function (request, response) {
 init();
 var port = Number(process.env.PORT || 5000);
 server.listen(port, function () {
-   console.log('Express server started on port %s', server.address().port); 
+   console.log('Express server started on port %s', server.address().port);
 });
